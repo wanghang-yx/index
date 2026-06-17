@@ -1,16 +1,184 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>测试分支页面</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的极简博客</title>
+    <style>
+        /* 1. 全局变量与基础重置 */
+        :root {
+            --bg-color: #f9f9f9;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-sub: #666666;
+            --accent-color: #2563eb; /* 主题蓝 */
+            --border-color: #e5e7eb;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-sub: #a0a0a0;
+            --accent-color: #60a5fa;
+            --border-color: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        a { text-decoration: none; color: var(--accent-color); }
+        a:hover { text-decoration: underline; }
+
+        /* 2. 导航栏 */
+        header {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--text-main); }
+        nav a { margin-left: 20px; color: var(--text-sub); font-weight: 500; }
+        
+        /* 主题切换按钮 */
+        .theme-btn {
+            background: none; border: 1px solid var(--border-color);
+            padding: 5px 10px; border-radius: 4px; cursor: pointer;
+            color: var(--text-main); font-size: 0.9rem;
+        }
+
+        /* 3. 主体布局 (Flexbox) */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 40px;
+        }
+        main { flex: 3; }
+        aside { flex: 1; }
+
+        /* 4. 文章卡片样式 */
+        .post-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s;
+        }
+        .post-card:hover { transform: translateY(-2px); }
+        .post-date { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 8px; }
+        .post-title { font-size: 1.4rem; margin-bottom: 10px; color: var(--text-main); }
+        .post-excerpt { color: var(--text-sub); font-size: 0.95rem; }
+
+        /* 5. 侧边栏 */
+        .widget { margin-bottom: 30px; }
+        .widget h3 { font-size: 1.1rem; margin-bottom: 10px; border-bottom: 2px solid var(--accent-color); display: inline-block; padding-bottom: 4px;}
+        .widget ul { list-style: none; }
+        .widget li { margin-bottom: 8px; }
+        .widget a { color: var(--text-sub); }
+
+        /* 6. 响应式：手机端侧边栏隐藏或下移 */
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
+            header { flex-wrap: wrap; gap: 10px; }
+        }
+    </style>
 </head>
 <body>
-	<h3>我是master分支</h3><hr>
-	<h3>我是新的v0.1分支</h3>
-	<hr>
-	<h4>我是v0.2分支</h4>
-	<hr>
-	<h3>我是v0.3分支1</h3>
+
+    <!-- 导航区 -->
+    <header>
+        <a href="#" class="logo">MyBlog.</a>
+        <nav>
+            <a href="#">首页</a>
+            <a href="#">归档</a>
+            <a href="#">关于</a>
+            <button class="theme-btn" onclick="toggleTheme()">🌗 主题</button>
+        </nav>
+    </header>
+
+    <!-- 内容区 -->
+    <div class="container">
+        <main>
+            <!-- 文章 1 -->
+            <article class="post-card">
+                <div class="post-date">2023-10-27 · 前端开发</div>
+                <h2 class="post-title"><a href="#">如何用纯 HTML 搭建一个好看的博客？</a></h2>
+                <p class="post-excerpt">不需要复杂的框架，不需要 Node.js，回归 Web 的本质。今天我们只用一个 HTML 文件，配合 CSS 变量，就能实现一个支持暗黑模式、响应式的现代博客首页...</p>
+            </article>
+
+            <!-- 文章 2 -->
+            <article class="post-card">
+                <div class="post-date">2023-10-25 · 生活随笔</div>
+                <h2 class="post-title"><a href="#">周末的咖啡馆与代码</a></h2>
+                <p class="post-excerpt">阳光透过玻璃洒在键盘上，手边的拿铁已经凉了。有时候写代码不是为了完成工作，而是为了享受那种逻辑在指尖流淌的宁静...</p>
+            </article>
+
+            <!-- 文章 3 -->
+            <article class="post-card">
+                <div class="post-date">2023-10-20 · 技术笔记</div>
+                <h2 class="post-title"><a href="#">Git 推送失败的 5 种常见原因</a></h2>
+                <p class="post-excerpt">刚学 Git 时，`git push` 报错是家常便饭。这篇文章总结了从权限问题到远程分支冲突的解决方案，建议收藏...</p>
+            </article>
+        </main>
+
+        <aside>
+            <div class="widget">
+                <h3>关于我</h3>
+                <p style="font-size:0.9rem; color:var(--text-sub);">
+                    一个喜欢折腾技术的开发者。<br>
+                    在这里记录代码、生活与思考。
+                </p>
+            </div>
+            <div class="widget">
+                <h3>分类</h3>
+                <ul>
+                    <li><a href="#">前端开发 (12)</a></li>
+                    <li><a href="#">生活随笔 (8)</a></li>
+                    <li><a href="#">工具推荐 (5)</a></li>
+                    <li><a href="#">读书笔记 (3)</a></li>
+                </ul>
+            </div>
+            <div class="widget">
+                <h3>友链</h3>
+                <ul>
+                    <li><a href="https://github.com" target="_blank">GitHub</a></li>
+                    <li><a href="https://gitee.com" target="_blank">Gitee</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 简单的 JS 用于切换主题 -->
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme); // 记住用户选择
+        }
+
+        // 页面加载时检查本地存储或系统偏好
+        window.onload = () => {
+            const saved = localStorage.getItem('theme');
+            if (saved) {
+                document.documentElement.setAttribute('data-theme', saved);
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        };
+    </script>
 </body>
 </html>
